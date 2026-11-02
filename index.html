@@ -7,7 +7,72 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       .home-hero {
-        min-height: 80vh;
+        position: relative;
+        min-height: min(76vh, 720px);
+        overflow: hidden;
+        background: linear-gradient(115deg, #12315b 0%, #0d6efd 72%, #438af4 100%);
+      }
+
+      .navbar .nav-link {
+        color: #fff;
+      }
+
+      .navbar .nav-link:hover,
+      .navbar .nav-link:focus-visible {
+        color: #fff;
+      }
+
+      .home-hero::before {
+        position: absolute;
+        top: -18rem;
+        right: -10rem;
+        width: 42rem;
+        aspect-ratio: 1;
+        border: 1px solid rgb(255 255 255 / 12%);
+        border-radius: 50%;
+        box-shadow: 0 0 0 4rem rgb(255 255 255 / 4%), 0 0 0 8rem rgb(255 255 255 / 3%);
+        content: "";
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-copy {
+        max-width: 42rem;
+      }
+
+      .hero-title {
+        font-size: clamp(3rem, 7vw, 5.5rem);
+        letter-spacing: -0.045em;
+        line-height: 1.05;
+      }
+
+      .hero-description {
+        max-width: 38rem;
+        color: #e4edff;
+        font-size: clamp(1.05rem, 2vw, 1.25rem);
+        line-height: 1.7;
+      }
+
+      .hero-values {
+        border: 1px solid rgb(255 255 255 / 22%);
+        border-radius: 1.25rem;
+        background: rgb(255 255 255 / 10%);
+        box-shadow: 0 1.5rem 4rem rgb(6 25 61 / 18%);
+        backdrop-filter: blur(12px);
+      }
+
+      .hero-value + .hero-value {
+        border-top: 1px solid rgb(255 255 255 / 18%);
+      }
+
+      @media (max-width: 575.98px) {
+        .home-hero {
+          min-height: auto;
+        }
       }
     </style>
 </head>
@@ -31,16 +96,40 @@
   </div>
 </nav>
 
-<section id="materi-belajar" class="home-hero bg-primary text-white d-flex align-items-center">
-  <div class="container py-5">
-    <p class="text-uppercase fw-semibold mb-2">Guru Agama Katolik</p>
-    <h1 class="display-3 fw-bold">Materi Belajar</h1>
-    <h2 class="h3 mt-3">Pengenalan Pendidikan Agama Katolik</h2>
-    <p class="lead mt-3 mb-4">
-      Belajar dan menghayati nilai kasih, kepedulian, kejujuran, serta tanggung jawab
-      dalam kehidupan sehari-hari.
-    </p>
-    <a href="materi1.html" class="btn btn-light btn-lg">Mulai Belajar</a>
+<section id="materi-belajar" class="home-hero text-white d-flex align-items-center">
+  <div class="container hero-content py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <div class="hero-copy">
+          <p class="text-uppercase fw-semibold mb-3">Guru Agama Katolik</p>
+          <h1 class="hero-title fw-bold">Materi Belajar</h1>
+          <h2 class="h3 fw-semibold mt-4">Pengenalan Pendidikan Agama Katolik</h2>
+          <p class="hero-description mt-3 mb-4">
+            Belajar dan menghayati nilai kasih, kepedulian, kejujuran, serta tanggung jawab
+            dalam kehidupan sehari-hari.
+          </p>
+          <a href="materi1.html" class="btn btn-light btn-lg fw-semibold px-4">Mulai Belajar</a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <aside class="hero-values p-4 p-md-5" aria-label="Nilai pembelajaran">
+          <p class="text-uppercase fw-semibold small mb-2">Belajar, bertumbuh, berbagi</p>
+          <h2 class="h4 fw-bold mb-4">Nilai yang dibawa dalam kehidupan</h2>
+          <div class="hero-value py-3">
+            <span class="fw-semibold">01</span>
+            <span class="ms-3">Kasih dan kepedulian</span>
+          </div>
+          <div class="hero-value py-3">
+            <span class="fw-semibold">02</span>
+            <span class="ms-3">Kejujuran dalam tindakan</span>
+          </div>
+          <div class="hero-value py-3">
+            <span class="fw-semibold">03</span>
+            <span class="ms-3">Tanggung jawab setiap hari</span>
+          </div>
+        </aside>
+      </div>
+    </div>
   </div>
 </section>
 
