@@ -1,34 +1,24 @@
 # Website Guru Agama Katolik
+Website pembelajaran untuk mendukung kegiatan belajar dan berbagi materi Pendidikan Agama Katolik. Situs ini menyediakan materi pengenalan, informasi artikel, galeri, video pembelajaran, serta tautan untuk menghubungi pengelola.
 
-Selamat datang di **Website Guru Agama Katolik**! Website ini dibuat untuk mendukung pembelajaran dan berbagi sumber daya pembelajaran Pendidikan Agama Katolik.
+## Konten
+- **Materi belajar:** Pengenalan Pendidikan Agama Katolik, tujuan pembelajaran, dan refleksi.
+- **Artikel:** Bagian untuk artikel seputar Pendidikan Agama Katolik.
+- **Galeri:** Bagian dokumentasi foto kegiatan.
+- **Video:** Video tentang kesetiaan dalam perkawinan, pembaptisan Yesus, dan tugas pembuatan video pembelajaran.
+- **Kontak:** Formulir kontak yang tersedia pada halaman utama.
 
-## Konten Utama:
-- **Artikel Pendidikan:** Berisi artikel-artikel menarik seputar Pendidikan Agama Katolik.
-- **Jurnal Pembelajaran:** Catatan atau jurnal harian guru tentang pengalaman dan praktik pembelajaran.
-- **Galeri Foto:** Dokumentasi kegiatan kelas, aktivitas rohani, dan lainnya.
-- **Video Pembelajaran:** Video edukatif dan inspiratif tentang pembelajaran agama katolik.
+## Teknologi
+- HTML
+- Bootstrap 5.3.2 (CSS dan JavaScript melalui jsDelivr CDN)
 
-## Fitur Utama:
-- Artikel edukatif
-- Galeri foto kegiatan
-- Video pembelajaran
-- Form Kontak untuk komunikasi
-- Halaman Login khusus guru
+## Menjalankan secara lokal
+Klon repositori, lalu buka `index.html` di browser. Tidak diperlukan proses build.
 
-## Teknologi yang Digunakan:
-- HTML & CSS
-- Bootstrap Framework
+Halaman materi juga dapat dibuka langsung melalui `materi1.html`.
 
-## Cara Menggunakan Website:
-Cukup buka alamat berikut di browser Anda:
+## Situs
+[https://guruagamakita.github.io](https://guruagamakita.github.io)
 
-```
-https://guruagamakatolik.github.io
-```
-
-## Kontak
-Untuk informasi lebih lanjut, hubungi melalui form kontak di website atau email: [email Anda]
-
-Terima kasih dan Berkah Dalem!
-
----
+## Catatan
+Bagian artikel dan galeri di halaman utama saat ini masih berupa placeholder. Formulir kontak juga belum dikonfigurasi untuk mengirim pesan.
