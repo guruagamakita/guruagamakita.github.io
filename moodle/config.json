@@ -1,1 +1,5 @@
-{"mode":"offline","online_url":"","local_url":"http://localhost/moodle"}
+{
+  "mode": "online",
+  "online_url": "https://pioneer-affiliate-convertible-narrative.trycloudflare.com",
+  "local_url": "http://localhost/moodle"
+}
