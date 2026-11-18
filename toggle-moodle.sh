@@ -124,6 +124,8 @@ if [[ $mode == online ]]; then
     echo "Tunnel gagal mendapatkan URL. Periksa $log." >&2
     exit 1
   fi
+  # Tunnel hanya meneruskan ke localhost; path /moodle harus ada di URL publik.
+  url="$url/moodle"
   if ! set_wwwroot "$url"; then
     if is_our_tunnel "$pid"; then kill "$pid"; fi
     rm -f -- "$pid_file"
