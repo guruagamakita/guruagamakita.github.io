@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Moodle - Pendidikan Agama Katolik</title>
+  <meta name="description" content="Portal pembelajaran LMS Moodle untuk Pendidikan Agama Katolik">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+      width: 100%;
+      padding: 40px;
+      text-align: center;
+    }
+    .header-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: white;
+    }
+    .status-badge.offline {
+      background-color: #ff6b6b;
+    }
+    .status-badge.online {
+      background-color: #51cf66;
+    }
+    .message {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+    .message strong {
+      color: #333;
+    }
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background-color: #667eea;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+    .btn-primary:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-secondary {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 2px solid #ddd;
+    }
+    .btn-secondary:hover {
+      background-color: #e0e0e0;
+      transform: translateY(-2px);
+    }
+    .info-box {
+      background-color: #f9f9f9;
+      border-left: 4px solid #667eea;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      text-align: left;
+      font-size: 14px;
+      color: #555;
+    }
+    .footer-text {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-icon">📚</div>
+    <h1>Portal Kelas Moodle</h1>
+    <div class="status-badge" id="statusBadge">Memuat...</div>
+    
+    <div class="message" id="messageBox">Memuat konfigurasi...</div>
+    
+    <div class="button-group" id="buttonGroup">
+      <button class="btn btn-primary" disabled>Memuat...</button>
+    </div>
+    
+    <a href="../index.html" class="btn btn-secondary">← Kembali ke Beranda</a>
+    
+    <div class="footer-text">
+      Portal Pembelajaran Pendidikan Agama Katolik
+    </div>
+  </div>
+
+  <script>
+    async function loadConfig() {
+      try {
+        const response = await fetch("./config.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const config = await response.json();
+        
+        const statusBadge = document.getElementById("statusBadge");
+        const messageBox = document.getElementById("messageBox");
+        const buttonGroup = document.getElementById("buttonGroup");
+        
+        if (config.mode === "online" && config.online_url) {
+          statusBadge.className = "status-badge online";
+          statusBadge.textContent = "ONLINE 🟢";
+          
+          messageBox.innerHTML = 
+            `<strong>Kelas sedang AKTIF secara online!</strong><br>` +
+            `Klik tombol di bawah untuk mengakses pembelajaran Moodle.`;
+          
+          const link = document.createElement("a");
+          const url = new URL(config.online_url);
+          if (!["http:", "https:"].includes(url.protocol)) throw new Error("URL online tidak valid");
+          link.href = url.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.className = "btn btn-primary";
+          link.textContent = "Masuk ke Kelas Moodle (Online) →";
+          buttonGroup.replaceChildren(link);
+        } else if (config.mode === "offline" && config.local_url) {
+          statusBadge.className = "status-badge offline";
+          statusBadge.textContent = "MODE PEMELIHARAAN 🔧";
+          
+          messageBox.innerHTML = 
+            `<strong>Kelas sedang dalam mode pemeliharaan atau offline.</strong><br>` +
+            `Kami sedang melakukan pembaruan dan perbaikan sistem agar pembelajaran ` +
+            `Anda lebih baik. Silakan kembali lagi dalam beberapa saat. 😊`;
+          
+          const link = document.createElement("a");
+          const url = new URL(config.local_url);
+          if (!["http:", "https:"].includes(url.protocol)) throw new Error("URL lokal tidak valid");
+          link.href = url.href;
+          link.className = "btn btn-primary";
+          link.textContent = "Masuk via Jaringan Lokal (Khusus Lab)";
+          buttonGroup.replaceChildren(link);
+        } else {
+          throw new Error("Mode atau URL Moodle tidak valid");
+        }
+      } catch (error) {
+        console.error("Gagal memuat konfigurasi:", error);
+        document.getElementById("statusBadge").textContent = "ERROR ⚠️";
+        document.getElementById("messageBox").textContent = 
+          "Terjadi kesalahan saat memuat konfigurasi. Silakan refresh halaman.";
+        document.getElementById("buttonGroup").replaceChildren();
+      }
+    }
+    
+    document.addEventListener("DOMContentLoaded", loadConfig);
+  </script>
+</body>
+</html>

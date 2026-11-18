@@ -17,6 +17,25 @@ Klon repositori, lalu buka `index.html` di browser. Tidak diperlukan proses buil
 
 Halaman materi juga dapat dibuka langsung melalui `materi1.html`.
 
+## Portal Moodle
+Portal `moodle/` membaca `moodle/config.json` melalui HTTP; gunakan server lokal
+untuk mengujinya, bukan membuka file langsung. Sebelum memakai skrip, commit
+file portal dan skrip ke repositori, siapkan Moodle di `/var/www/html/moodle`,
+serta instal `cloudflared`, `python3`, `sudo`, dan Git di WSL. Git harus sudah
+dikonfigurasi untuk push ke upstream branch aktif.
+
+Di WSL, jalankan `chmod +x toggle-moodle.sh` sekali, kemudian jalankan
+`./toggle-moodle.sh online` atau `./toggle-moodle.sh offline`. Skrip mengubah
+`$CFG->wwwroot`, meng-commit hanya konfigurasi portal, lalu melakukan push.
+Pastikan konfigurasi portal tidak memiliki perubahan lokal atau staged sebelum
+menjalankan skrip. Jika push gagal, perbaiki masalah Git lalu jalankan
+`git push` kembali. Tunnel harus tetap berjalan di WSL selama mode online;
+skrip offline hanya menghentikan tunnel yang dimulai oleh skrip ini.
+
+Tautan lokal bawaan memakai `localhost`, yaitu komputer pengguna yang membuka
+tautan, bukan otomatis komputer server. Untuk akses dari komputer lain di lab,
+sesuaikan `local_url` dengan alamat server yang dapat dijangkau di jaringan.
+
 ## Situs
 [https://guruagamakita.github.io](https://guruagamakita.github.io)
 
