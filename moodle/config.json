@@ -1,5 +1,5 @@
 {
-  "mode": "online",
+  "mode": "offline",
   "online_url": "https://bill-personals-der-footage.trycloudflare.com/moodle",
   "local_url": "http://localhost/moodle"
 }
