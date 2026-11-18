@@ -27,6 +27,8 @@ dikonfigurasi untuk push ke upstream branch aktif.
 Di WSL, jalankan `chmod +x toggle-moodle.sh` sekali, kemudian jalankan
 `./toggle-moodle.sh online` atau `./toggle-moodle.sh offline`. Skrip mengubah
 `$CFG->wwwroot`, meng-commit hanya konfigurasi portal, lalu melakukan push.
+Mode online juga menambahkan `$CFG->sslproxy = true;` (satu kali, duplikat
+dibersihkan), dan mode offline menghapusnya.
 Pastikan konfigurasi portal tidak memiliki perubahan lokal atau staged sebelum
 menjalankan skrip. Jika push gagal, perbaiki masalah Git lalu jalankan
 `git push` kembali. Tunnel harus tetap berjalan di WSL selama mode online;

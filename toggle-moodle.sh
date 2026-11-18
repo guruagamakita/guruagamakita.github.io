@@ -47,7 +47,7 @@ is_our_tunnel() {
 set_wwwroot() {
   sudo python3 -c '
 import os, re, sys, tempfile
-path, url = sys.argv[1:]
+path, url, ssl = sys.argv[1:]
 if os.path.islink(path):
     sys.exit("config.php berupa symlink; ubah wwwroot secara manual.")
 with open(path, encoding="utf-8", newline="") as f:
@@ -56,6 +56,9 @@ pattern = r"^([ \t]*\$CFG->wwwroot[ \t]*=[ \t]*)([\"\x27])[^\r\n\"\x27]*\2([ \t]
 data, count = re.subn(pattern, lambda m: m.group(1) + repr(url) + m.group(3), data, flags=re.MULTILINE)
 if count != 1:
     sys.exit("config.php harus memiliki tepat satu penetapan $CFG->wwwroot.")
+data = re.sub(r"^[ \t]*\$CFG->sslproxy[ \t]*=[^\r\n]*\r?\n", "", data, flags=re.MULTILINE)
+if ssl == "1":
+    data = re.sub(r"(^[ \t]*\$CFG->wwwroot[^\r\n]*)(\r?\n)", lambda m: m.group(1) + m.group(2) + "$CFG->sslproxy = true;" + m.group(2), data, count=1, flags=re.MULTILINE)
 stat = os.stat(path)
 fd, temp = tempfile.mkstemp(dir=os.path.dirname(path), prefix=".moodle-config-")
 try:
@@ -67,7 +70,7 @@ try:
 finally:
     if os.path.exists(temp):
         os.unlink(temp)
-' "$php_config" "$1"
+' "$php_config" "$1" "${2:-0}"
 }
 
 set_portal() {
@@ -126,7 +129,7 @@ if [[ $mode == online ]]; then
   fi
   # Tunnel hanya meneruskan ke localhost; path /moodle harus ada di URL publik.
   url="$url/moodle"
-  if ! set_wwwroot "$url"; then
+  if ! set_wwwroot "$url" 1; then
     if is_our_tunnel "$pid"; then kill "$pid"; fi
     rm -f -- "$pid_file"
     echo "Gagal mengubah wwwroot; tunnel dihentikan." >&2
